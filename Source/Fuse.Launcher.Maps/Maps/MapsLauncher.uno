@@ -51,6 +51,7 @@ namespace Fuse.LauncherImpl
 			if defined(Android || iOS)
 			{
 				var latlon = latitude.ToString() + "," + longitude.ToString();
+				query = Uri.Encode(query);
 
 				if defined(Android)
 					LaunchMapsAndroid("geo:" + latlon + "?q=" + Uri.Encode(query));
