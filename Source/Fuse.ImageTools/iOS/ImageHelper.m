@@ -290,8 +290,10 @@
 					UIGraphicsEndImageContext();
 			}
 			//Save the final image
-			if(!inPlace)
+			if (!inPlace) {
 				path = [self createImagePath:YES];
+				path = [self createImagePathWithExtension:@"jpg" temp:YES];
+			}
 
 			[self saveImage:newImage path:path];
 			onComplete(path);
