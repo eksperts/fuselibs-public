@@ -58,6 +58,7 @@
 	@autoreleasepool {
 		NSData* imageData;
 		NSString* ext = [[path pathExtension] lowercaseString];
+
 		if([ext isEqualToString:@"png"]) {
 			imageData = UIImagePNGRepresentation(image);
 		} else {
@@ -355,8 +356,18 @@
 +(NSString*) localPathFromPHImageFileURL:(NSURL*)url
 		temp:(BOOL)temp
 {
-	NSString* name = [[url path] lastPathComponent];
-	return [NSString stringWithFormat:@"%@/%@", [self createImagePath:temp], name];
+	NSString* ext = [[url pathExtension] lowercaseString];
+	NSString* newFullFileName = @"";
+
+	if([ext isEqualToString:@"png"]) {
+		newFullFileName = [[url path] lastPathComponent];
+	} else {
+		NSString* path = url.absoluteString;
+		NSString* fullFileName = [path lastPathComponent];
+		NSString* fileName = [fullFileName stringByDeletingPathExtension];
+		newFullFileName = [fileName stringByAppendingPathExtension:@"jpg"];
+	}
+	return [NSString stringWithFormat:@"%@/%@", [self createImagePath:temp], newFullFileName];
 }
 
 +(NSString*) applicationDocumentsDirectory
